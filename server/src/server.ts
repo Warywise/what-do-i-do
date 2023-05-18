@@ -10,6 +10,8 @@ server.use(cors());
 server.use(express.json());
 
 server.get("/", (_req: Request, res: Response) => {
+  if (_req.body.error) throw new Error("Erro de teste");
+
   res.status(HTTP_CODES.OK).send("Veja o ReadMe para rotas disponíveis");
 });
 
