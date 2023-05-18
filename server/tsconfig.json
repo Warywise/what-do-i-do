@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "nodenext",
+    "target": "es2017",
+    "rootDir": "./",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "lib": ["esnext", "es2022"],
+    "esModuleInterop": true,
+    "strict": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}
