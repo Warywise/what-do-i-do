@@ -24,7 +24,7 @@ class TaskService {
       id: v4(),
       title,
       description,
-      createdAt: new Date(),
+      createdAt: `${new Date()}`,
       concludedAt: null,
     };
 
@@ -46,11 +46,26 @@ class TaskService {
     const task = tasks[category][taskIndex];
 
     if (concluded) {
-      task.concludedAt = new Date();
+      task.concludedAt = `${new Date()}`;
     } else {
       task.title = title;
       task.description = description;
     }
+
+    this.Storage.WRITE_FILE(tasks);
+
+    return tasks;
+  }
+
+  deleteTask(req: Request) {
+    const { id, category } = req.body as { [key: string]: string };
+    const tasks = this.Storage.READ_FILE();
+
+    const taskIndex = tasks[category].findIndex((task) => task.id === id);
+
+    if (taskIndex < 0) throw new Error('Tarefa não encontrada!');
+
+    tasks[category].splice(taskIndex, 1);
 
     this.Storage.WRITE_FILE(tasks);
 
