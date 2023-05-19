@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 
-import HTTP_CODES from './utils/httpCodes';
+import HTTP_CODES from './lib/httpCodes';
 import { Container } from '@decorators/di';
 import { ERROR_MIDDLEWARE } from '@decorators/express';
 
