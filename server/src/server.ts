@@ -1,13 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-
-import HTTP_CODES from './lib/httpCodes';
 import { Container } from '@decorators/di';
 import { ERROR_MIDDLEWARE } from '@decorators/express';
 
+import Routers from './routers';
+import HTTP_CODES from './lib/httpCodes';
+
 const server = express();
+console.log('~> Express initialized!');
 server.use(cors());
 server.use(express.json());
+console.log('~> Configs OK.');
+server.use(Routers);
+console.log('~> Routers registered!');
 
 server.get("/", (_req: Request, res: Response) => {
   if (_req.body.error) throw new Error("Erro de teste");
