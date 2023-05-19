@@ -1,4 +1,5 @@
 import server from './server';
+import { v4 } from 'uuid';
 import 'reflect-metadata';
 
 const PORT = process.env.PORT || 5000;
