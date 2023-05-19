@@ -34,6 +34,28 @@ class TaskService {
 
     return newTask;
   }
+
+  updateTask(req: Request) {
+    const { id, title, description, category, concluded } = req.body as { [key: string]: string } & { concluded: boolean };
+    const tasks = this.Storage.READ_FILE();
+
+    const taskIndex = tasks[category].findIndex((task) => task.id === id);
+
+    if (taskIndex < 0) throw new Error('Tarefa não encontrada!');
+
+    const task = tasks[category][taskIndex];
+
+    if (concluded) {
+      task.concludedAt = new Date();
+    } else {
+      task.title = title;
+      task.description = description;
+    }
+
+    this.Storage.WRITE_FILE(tasks);
+
+    return tasks;
+  }
 };
 
 export default new TaskService();
