@@ -6,17 +6,17 @@ import * as Storage from '../lib/handleFile';
 class TaskService {
   private readonly Storage;
 
-  constructor() {
-    this.Storage = Storage;
+  constructor(storage = Storage) {
+    this.Storage = storage;
   }
 
-  getTasks() {
+  readonly getTasks = () => {
     const tasks = this.Storage.READ_FILE();
 
     return tasks;
   }
 
-  createTask(req: Request) {
+  readonly createTask = (req: Request) => {
     const { title, description, category } = req.body as { [key: string]: string };
     const tasks = this.Storage.READ_FILE();
 
@@ -35,7 +35,7 @@ class TaskService {
     return newTask;
   }
 
-  updateTask(req: Request) {
+  readonly updateTask = (req: Request) => {
     const { id, title, description, category, concluded } = req.body as { [key: string]: string } & { concluded: boolean };
     const tasks = this.Storage.READ_FILE();
 
@@ -57,7 +57,7 @@ class TaskService {
     return tasks;
   }
 
-  deleteTask(req: Request) {
+  readonly deleteTask = (req: Request) => {
     const { id, category } = req.body as { [key: string]: string };
     const tasks = this.Storage.READ_FILE();
 
@@ -73,4 +73,4 @@ class TaskService {
   }
 };
 
-export default new TaskService();
+export default TaskService;
