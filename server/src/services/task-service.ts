@@ -23,7 +23,7 @@ class TaskService {
     const newTask = {
       id: v4(),
       title,
-      description,
+      description: description || null,
       createdAt: `${new Date()}`,
       concludedAt: null,
     };
@@ -49,7 +49,7 @@ class TaskService {
       task.concludedAt = `${new Date()}`;
     } else {
       task.title = title;
-      task.description = description;
+      task.description = description || null;
     }
 
     this.Storage.WRITE_FILE(tasks);

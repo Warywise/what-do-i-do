@@ -6,6 +6,7 @@ import {
 import TaskService from '../services/task-service';
 import Handler from '../lib/handler';
 import HTTP_CODES from '../lib/httpCodes';
+import { TaskVerifier } from '../middlewares/task-verifier';
 
 @Controller('/tasks')
 export default class TaskController extends Handler {
@@ -23,21 +24,21 @@ export default class TaskController extends Handler {
     return res.status(HTTP_CODES.OK).json(tasks);
   }
 
-  @Post('')
+  @Post('', [TaskVerifier])
   createTask(@Request() req: RequestType, @Response() res: ResponseType) {
     const task = this.TryCatch(() => this.TaskService.createTask(req));
 
     return res.status(HTTP_CODES.CREATED).json(task);
   }
 
-  @Patch('')
+  @Patch('', [TaskVerifier])
   updateTask(@Request() req: RequestType, @Response() res: ResponseType) {
     const tasks = this.TryCatch(() => this.TaskService.updateTask(req));
 
     return res.status(HTTP_CODES.OK).json(tasks);
   }
 
-  @Delete('')
+  @Delete('', [TaskVerifier])
   deleteTask(@Request() req: RequestType, @Response() res: ResponseType) {
     const tasks = this.TryCatch(() => this.TaskService.deleteTask(req));
 
