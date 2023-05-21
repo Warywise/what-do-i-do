@@ -4,6 +4,7 @@ import { Controller, Delete, Post, Request, Response } from '@decorators/express
 import CategoryService from '../services/category-service';
 import Handler from '../lib/handler';
 import HTTP_CODES from '../lib/httpCodes';
+import { CategoryVerifier } from '../middlewares';
 
 @Controller('/category')
 export default class CategoryController extends Handler {
@@ -14,14 +15,14 @@ export default class CategoryController extends Handler {
     this.CategoryService = new CategoryService();
   }
 
-  @Post('')
+  @Post('', [CategoryVerifier])
   createCategory(@Request() req: RequestType, @Response() res: ResponseType) {
     const tasks = this.TryCatch(() => this.CategoryService.createCategory(req));
 
     return res.status(HTTP_CODES.CREATED).json(tasks);
   }
 
-  @Delete('')
+  @Delete('', [CategoryVerifier])
   deleteCategory(@Request() req: RequestType, @Response() res: ResponseType) {
     const tasks = this.TryCatch(() => this.CategoryService.deleteCategory(req, res));
 

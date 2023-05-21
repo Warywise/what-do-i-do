@@ -6,7 +6,7 @@ import {
 import TaskService from '../services/task-service';
 import Handler from '../lib/handler';
 import HTTP_CODES from '../lib/httpCodes';
-import { TaskVerifier } from '../middlewares/task-verifier';
+import { TaskVerifier } from '../middlewares';
 
 @Controller('/tasks')
 export default class TaskController extends Handler {
