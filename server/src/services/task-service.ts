@@ -1,7 +1,8 @@
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { v4 } from 'uuid';
 
 import * as Storage from '../lib/handleFile';
+import HTTP_CODES from '../lib/httpCodes';
 
 class TaskService {
   private readonly Storage;
@@ -32,16 +33,19 @@ class TaskService {
 
     this.Storage.WRITE_FILE(tasks);
 
-    return newTask;
+    return tasks;
   }
 
-  readonly updateTask = (req: Request) => {
+  readonly updateTask = (req: Request, res: Response) => {
     const { id, title, description, category, concluded } = req.body as { [key: string]: string } & { concluded: boolean };
     const tasks = this.Storage.READ_FILE();
 
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
-    if (taskIndex < 0) throw new Error('Tarefa não encontrada!');
+    if (taskIndex < 0) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Tarefa não encontrada!');
+    }
 
     const task = tasks[category][taskIndex];
 
@@ -57,13 +61,16 @@ class TaskService {
     return tasks;
   }
 
-  readonly deleteTask = (req: Request) => {
+  readonly deleteTask = (req: Request, res: Response) => {
     const { id, category } = req.body as { [key: string]: string };
     const tasks = this.Storage.READ_FILE();
 
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
-    if (taskIndex < 0) throw new Error('Tarefa não encontrada!');
+    if (taskIndex < 0) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Tarefa não encontrada!');
+    }
 
     tasks[category].splice(taskIndex, 1);
 

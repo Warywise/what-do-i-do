@@ -33,14 +33,14 @@ export default class TaskController extends Handler {
 
   @Patch('', [TaskVerifier])
   updateTask(@Request() req: RequestType, @Response() res: ResponseType) {
-    const tasks = this.TryCatch(() => this.TaskService.updateTask(req));
+    const tasks = this.TryCatch(() => this.TaskService.updateTask(req, res));
 
     return res.status(HTTP_CODES.OK).json(tasks);
   }
 
   @Delete('', [TaskVerifier])
   deleteTask(@Request() req: RequestType, @Response() res: ResponseType) {
-    const tasks = this.TryCatch(() => this.TaskService.deleteTask(req));
+    const tasks = this.TryCatch(() => this.TaskService.deleteTask(req, res));
 
     return res.status(HTTP_CODES.OK).json(tasks);
   }

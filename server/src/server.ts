@@ -24,7 +24,7 @@ const serverErrorMiddleware = (
   error: Error, _req: Request, res: Response, _next: NextFunction
 ) => {
   console.log('\n⛔ Error: ', error, '\n');
-  return res.status(HTTP_CODES.INTERNAL_SERVER_ERROR).json({ error: error?.message ?? error });
+  return res.status(res.statusCode || HTTP_CODES.INTERNAL_SERVER_ERROR).json({ error: error?.message ?? error });
 };
 
 Container.provide([

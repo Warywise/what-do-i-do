@@ -7,6 +7,7 @@ export const joiTaskPost = Joi.object({
 });
 
 export const joiTaskPatch = Joi.object({
+  id: Joi.string().uuid().message('ID inválido').required(),
   title: Joi.when('concluded', {
     is: true,
     then: Joi.string().allow('', null),
