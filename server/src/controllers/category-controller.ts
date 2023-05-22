@@ -17,7 +17,7 @@ export default class CategoryController extends Handler {
 
   @Post('', [CategoryVerifier])
   createCategory(@Request() req: RequestType, @Response() res: ResponseType) {
-    const tasks = this.TryCatch(() => this.CategoryService.createCategory(req));
+    const tasks = this.TryCatch(() => this.CategoryService.createCategory(req, res));
 
     return res.status(HTTP_CODES.CREATED).json(tasks);
   }

@@ -26,7 +26,7 @@ export default class TaskController extends Handler {
 
   @Post('', [TaskVerifier])
   createTask(@Request() req: RequestType, @Response() res: ResponseType) {
-    const task = this.TryCatch(() => this.TaskService.createTask(req));
+    const task = this.TryCatch(() => this.TaskService.createTask(req, res));
 
     return res.status(HTTP_CODES.CREATED).json(task);
   }

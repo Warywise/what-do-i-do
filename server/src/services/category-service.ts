@@ -10,9 +10,14 @@ class CategoryService {
     this.Storage = storage;
   }
 
-  readonly createCategory = (req: Request) => {
+  readonly createCategory = (req: Request, res: Response) => {
     const { name } = req.body as { [key: string]: string };
     const tasksFile = this.Storage.READ_FILE();
+
+    if (tasksFile[name]) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Categoria já existente!');
+    }
 
     tasksFile[name] = [];
 
@@ -26,7 +31,7 @@ class CategoryService {
     const tasksFile = this.Storage.READ_FILE();
 
     if (!tasksFile[name]) {
-      res.status(HTTP_CODES.BAD_REQUEST);
+      res.status(HTTP_CODES.NOT_FOUND);
       throw new Error('Categoria não encontrada!');
     }
 

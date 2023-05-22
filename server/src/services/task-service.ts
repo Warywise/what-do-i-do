@@ -17,9 +17,14 @@ class TaskService {
     return tasks;
   }
 
-  readonly createTask = (req: Request) => {
+  readonly createTask = (req: Request, res: Response) => {
     const { title, description, category } = req.body as { [key: string]: string };
     const tasks = this.Storage.READ_FILE();
+
+    if (!tasks[category]) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Categoria inválida!');
+    }
 
     const newTask = {
       id: v4(),
@@ -40,10 +45,15 @@ class TaskService {
     const { id, title, description, category, concluded } = req.body as { [key: string]: string } & { concluded: boolean };
     const tasks = this.Storage.READ_FILE();
 
+    if (!tasks[category]) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Categoria inválida!');
+    }
+
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
     if (taskIndex < 0) {
-      res.status(HTTP_CODES.BAD_REQUEST);
+      res.status(HTTP_CODES.NOT_FOUND);
       throw new Error('Tarefa não encontrada!');
     }
 
@@ -65,10 +75,15 @@ class TaskService {
     const { id, category } = req.body as { [key: string]: string };
     const tasks = this.Storage.READ_FILE();
 
+    if (!tasks[category]) {
+      res.status(HTTP_CODES.BAD_REQUEST);
+      throw new Error('Categoria inválida!');
+    }
+
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
     if (taskIndex < 0) {
-      res.status(HTTP_CODES.BAD_REQUEST);
+      res.status(HTTP_CODES.NOT_FOUND);
       throw new Error('Tarefa não encontrada!');
     }
 
