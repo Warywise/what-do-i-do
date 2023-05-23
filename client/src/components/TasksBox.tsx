@@ -12,7 +12,7 @@ const TasksBox: React.FC = () => {
         {tasksKeys.map((key) => {
           const tasksArray = tasks[key];
           return (
-            <TaskCard key={key} tasks={tasksArray} />
+            <TaskCard key={key} tasks={tasksArray} category={key} />
           );
         })}
       </Box>
