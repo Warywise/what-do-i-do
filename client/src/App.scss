@@ -25,31 +25,42 @@
 }
 
 #root {
-  background-color: #f9f9f9;
+  background-attachment: fixed;
+  background-image: linear-gradient(90deg, rgba(124, 169, 169, 0.25) 3%, rgba(119, 187, 188, 0.15) 29%, rgba(192, 201, 201, 0.25) 100%), url('./assets/whatdofundo.jpeg');
+  background-size: contain;
   box-sizing: border-box;
-  height: 100vh;
+  contain: content;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   text-align: center;
-  width: 100vw;
+  width: minmax(100vw);
 }
 
 .header {
-  background: linear-gradient(90deg, rgba(95, 93, 131, 1) 3%, rgba(92, 121, 161, 0.6705532554818803) 29%, rgba(174, 174, 175, 1) 100%);
   display: flex;
   justify-content: center;
-  position: sticky;
+  margin-bottom: 5em;
+  position: fixed;
   top: 0;
   width: 100vw;
-  z-index: 9;
 
-  &>* {
-    margin-block: 0.25em;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 25vh;
+    margin-top: 0;
+  }
+
+  img {
+    width: calc(5em + 15vmin);
   }
 
   .header-question {
     animation: shake 2s linear;
-    display: inline-block;
+    font-weight: 400;
+    margin-bottom: calc(0.5em + 1.5vmin);
   }
 }
 
@@ -58,7 +69,7 @@
   display: flex;
   flex-direction: column;
   min-height: 45vh;
-  margin-top: 6em;
+  margin-top: calc(6em + 10vmin);
   margin-inline: auto;
   padding: 1em;
   width: 90%;

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Collapse, Paper } from "@mui/material";
-import { TaskObject } from "../lib/interfaces";
-import TaskField from "./TaskField";
+import React, { useState } from 'react';
+import { Collapse, Paper } from '@mui/material';
+import { TaskObject } from '../lib/interfaces';
+import TaskField from './TaskField';
 
 const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 

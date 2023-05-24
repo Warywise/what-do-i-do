@@ -1,7 +1,7 @@
-import React, { SyntheticEvent } from "react";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+import React, { SyntheticEvent } from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import { TaskObject } from "../lib/interfaces";
+import { TaskObject } from '../lib/interfaces';
 
 type TaskFieldProps = {
   category: string;
