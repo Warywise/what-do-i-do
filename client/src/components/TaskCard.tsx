@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Collapse, Paper } from '@mui/material';
+import { Collapse, Fab, Paper } from '@mui/material';
 import { TaskObject } from '../lib/interfaces';
 import TaskField from './TaskField';
+import TaskActions from './TaskActions';
+import CreateIcon from '@mui/icons-material/AddTask';
+
 
 const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
@@ -32,6 +35,7 @@ const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, 
         >
           <h2>{category}</h2>
         </Paper>
+        <TaskActions />
         {!!tasks.length && tasks.map((task) => {
           return (
             <TaskField
@@ -43,6 +47,10 @@ const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, 
             />
           );
         })}
+        <Fab variant="extended" color='success' className='new-task'>
+          <CreateIcon sx={{ m: 1 }} />
+          New task
+        </Fab>
       </Paper>
     </Collapse>
   );
