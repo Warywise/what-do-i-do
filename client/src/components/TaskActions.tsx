@@ -1,15 +1,13 @@
 import React from 'react';
 import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Dehaze';
-import PlusIcon from '@mui/icons-material/Add';
-
-import EditIcon from '@mui/icons-material/EditNote';
+import ColorIcon from '@mui/icons-material/PaletteTwoTone';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 
 const TaskActions: React.FC = () => {
 
   const actions = [
-    { icon: <EditIcon />, name: 'Edit', onClick: () => console.log('Edit Board') },
+    { icon: <ColorIcon />, name: 'Color', onClick: () => console.log('Edit Board') },
     { icon: <DeleteIcon />, name: 'Delete', onClick: () => console.log('Delete Board') },
   ];
 
