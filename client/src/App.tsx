@@ -1,6 +1,6 @@
 import './App.scss';
 import Header from './components/Header';
-import TasksBox from './components/TasksBox';
+import BoardsBox from './components/BoardsBox';
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <Header />
       <div>
-        <TasksBox />
+        <BoardsBox />
       </div>
     </>
   )

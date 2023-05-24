@@ -1,23 +1,41 @@
 @keyframes shake {
-  15% { transform: rotate(-5deg) translate(0.15em, 0.3em); }
+  15% {
+    transform: rotate(-5deg) translate(0.15em, 0.3em);
+  }
 
-  30% { transform: rotate(3deg) translate(0, -0.05em); }
+  30% {
+    transform: rotate(3deg) translate(0, -0.05em);
+  }
 
-  45% { transform: rotate(0deg) translate(-0.15em, 0.25em); }
+  45% {
+    transform: rotate(0deg) translate(-0.15em, 0.25em);
+  }
 
-  60% { transform: rotate(-5deg) translate(0.15em, 0.25em); }
+  60% {
+    transform: rotate(-5deg) translate(0.15em, 0.25em);
+  }
 
-  75% { transform: rotate(0deg) translate(0, -0.15em); }
+  75% {
+    transform: rotate(0deg) translate(0, -0.15em);
+  }
 
-  90% { transform: rotate(5deg) translate(-0.05em, 0.25em); }
+  90% {
+    transform: rotate(5deg) translate(-0.05em, 0.25em);
+  }
 }
 
 @keyframes blub {
-  47% { transform: scale(0.99); }
+  47% {
+    transform: scale(0.99);
+  }
 
-  50% { transform: scale(1.015); }
+  50% {
+    transform: scale(1.015);
+  }
 
-  53% { transform: scale(1); }
+  53% {
+    transform: scale(1);
+  }
 }
 
 #root {
@@ -60,7 +78,7 @@
   }
 }
 
-.tasks-box {
+.boards-box {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -70,20 +88,20 @@
   padding: 1em;
   width: 90%;
 
-  .task-paper-collapse {
+  .tasks-board-collapse {
     box-shadow: none;
     width: 90%;
     margin-block: 0.5em;
 
-    .task-paper {
+    .tasks-board {
       border-radius: 0 4px 4px 4px;
       padding: 2em;
       padding-top: 6.5em;
       position: relative;
       margin-block: 1.75em;
 
-      .task-paper-header {
-        box-shadow: 1px -5px 3px -5px rgba(0,0,0,0.25), -5px -5px 3px -5px rgba(0, 0, 0, 0.25);
+      .tasks-board-header {
+        box-shadow: 1px -5px 3px -5px rgba(0, 0, 0, 0.25), -5px -5px 3px -5px rgba(0, 0, 0, 0.25);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -96,11 +114,11 @@
         left: 0;
         z-index: 7;
         cursor: pointer;
-        
+
         ::selection {
           background-color: transparent;
         }
-        
+
         &>* {
           margin-block: 0.15em;
         }
@@ -114,7 +132,61 @@
   }
 
   .collapsed {
-    box-shadow: -1px 3px 3px -5px rgba(0,0,0,0.2), -3px 3px 5px -5px rgba(0,0,0,0.14), -3px 3px 5px -3px rgba(0,0,0,0.12);
+    box-shadow: -1px 3px 3px -5px rgba(0, 0, 0, 0.2), -3px 3px 5px -5px rgba(0, 0, 0, 0.14), -3px 3px 5px -3px rgba(0, 0, 0, 0.12);
     margin-bottom: -2.5em;
+  }
+}
+
+.task-field {
+  background-color: #f9f9f9;
+  padding: 0.25em;
+  position: relative;
+
+  .task-field-description {
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(45% - 10vmin);
+  }
+
+  .task-field-actions {
+    display: flex;
+    gap: 24px;
+    max-width: 33%;
+    position: absolute;
+    right: 8%;
+    top: 0.5em;
+    visibility: visible;
+    z-index: 9;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .boards-box {
+    width: 95%;
+    .tasks-board-collapse {
+      width: 95%;
+
+      .task-field-description {
+        display: none;
+          visibility: hidden;
+        }
+
+        .task-field-title {
+          width: 60%;
+        }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .boards-box {
+    .tasks-board-collapse {
+      .expand-icon {
+        display: none;
+        visibility: hidden;
+      }
+    }
   }
 }

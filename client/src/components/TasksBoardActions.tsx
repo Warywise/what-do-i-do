@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Dehaze';
 import ColorIcon from '@mui/icons-material/PaletteTwoTone';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 
-const TaskActions: React.FC = () => {
+const TasksBoardActions: React.FC = () => {
 
   const actions = [
     { icon: <ColorIcon />, name: 'Color', onClick: () => console.log('Edit Board') },
@@ -21,7 +21,7 @@ const TaskActions: React.FC = () => {
       zIndex: 8,
     }}>
       <SpeedDial
-        ariaLabel="tasks-actions"
+        ariaLabel="tasks-board-actions"
         title='Board Options'
         icon={
           <SpeedDialIcon
@@ -43,4 +43,4 @@ const TaskActions: React.FC = () => {
   );
 }
 
-export default TaskActions;
+export default TasksBoardActions;

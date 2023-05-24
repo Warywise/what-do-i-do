@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Collapse, Fab, Paper } from '@mui/material';
 import { TaskObject } from '../lib/interfaces';
 import TaskField from './TaskField';
-import TaskActions from './TaskActions';
+import TasksBoardActions from './TasksBoardActions';
 import CreateIcon from '@mui/icons-material/AddTask';
 
-
-const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
+const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
   const [expanded, setExpanded] = useState('');
   const [collapseIn, setCollapseIn] = useState(false);
@@ -19,23 +18,23 @@ const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, 
     <Collapse
       in={collapseIn}
       collapsedSize={132}
-      className={`task-paper-collapse${collapseIn ? '' : ' collapsed'}`}
+      className={`tasks-board-collapse${collapseIn ? '' : ' collapsed'}`}
       sx={{ boxShadow: collapseIn ? 'none' : '' }}
     >
       <Paper
-        className="task-paper"
+        className="tasks-board"
         elevation={2}
         sx={{ backgroundColor: category === 'general' ? '#efe5e5' : '#aef5f5' }}
       >
         <Paper
-          className="task-paper-header"
+          className="tasks-board-header"
           elevation={0}
           sx={{ backgroundColor: category === 'general' ? '#efe5e5' : '#aef5f5' }}
           onClick={() => setCollapseIn(!collapseIn)}
         >
           <h2>{category}</h2>
         </Paper>
-        <TaskActions />
+        <TasksBoardActions />
         {!!tasks.length && tasks.map((task) => {
           return (
             <TaskField
@@ -56,4 +55,4 @@ const TaskCard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, 
   );
 };
 
-export default TaskCard;
+export default TasksBoard;

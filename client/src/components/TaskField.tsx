@@ -17,19 +17,21 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
 
   const TaskActions = () => {
     return (
-      <Typography
-        display="flex"
-        gap="32px"
-        position="absolute"
-        right="10%"
-        top="12px"
-        zIndex="9"
-        visibility="visible"
-      >
-        <Fab color="success" variant="extended" size="medium" sx={{ boxShadow: 'none' }}>
+      <Typography className="task-field-actions">
+        <Fab
+          color="success"
+          variant="extended"
+          size='medium'
+          sx={{ boxShadow: 'none' }}
+        >
           <EditIcon />
         </Fab>
-        <Fab color="warning" variant="extended" size="medium" sx={{ boxShadow: 'none' }}>
+        <Fab
+          color="warning"
+          variant="extended"
+          size='medium'
+          sx={{ boxShadow: 'none' }}
+        >
           <DeleteIcon />
         </Fab>
       </Typography>
@@ -40,21 +42,13 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
     <Accordion
       expanded={expanded}
       onChange={onChange(id)}
-      sx={{ backgroundColor: '#f9f9f9', position: 'relative', padding: 1 }}
+      className="task-field"
     >
-      <AccordionSummary expandIcon={<ExpandIcon />}>
-        <Typography width="33%" textAlign="start" variant="button">
+      <AccordionSummary expandIcon={<ExpandIcon className="expand-icon" />}>
+        <Typography className="task-field-title" minWidth="40%" textAlign="start" variant="button">
           {title}
         </Typography>
-        <Typography
-          width="calc(43% - 10vmin)"
-          className='task-expand-description'
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          color="GrayText"
-          textAlign="left"
-        >
+        <Typography color="GrayText" className="task-field-description">
           {description
             ? (description.length > 60 ? `${description.slice(0, 60)}...` : description)
             : 'No description'}
