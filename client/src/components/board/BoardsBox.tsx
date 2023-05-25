@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 
 import { TasksContext } from '../../lib/context';
 import TasksBoard from './TasksBoard';
+import BoardCreate from './BoardCreate';
 
 const BoardsBox: React.FC = () => {
   const { tasks } = useContext(TasksContext);
@@ -16,6 +17,7 @@ const BoardsBox: React.FC = () => {
             <TasksBoard key={key} tasks={tasksArray} category={key} />
           );
         })}
+        <BoardCreate />
       </Box>
     );
 };
