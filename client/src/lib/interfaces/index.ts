@@ -1,1 +1,7 @@
-export type { TaskObject, TasksData } from './tasks';
+export type {
+  TaskObject,
+  TasksData,
+  CreateTaskPayload,
+  UpdateTaskPayload,
+  DeleteTaskPayload,
+} from './tasks';

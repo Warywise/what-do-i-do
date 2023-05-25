@@ -2,11 +2,11 @@ import React, {
   createContext, Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
 import { TasksData } from '../interfaces';
-
-const TASKS_URL = 'http://localhost:5000/tasks';
+import { TASKS_URL } from '../utils';
 
 type InitialContext = {
   tasks: TasksData,
+  setTasks: Dispatch<SetStateAction<TasksData>>,
 };
 
 export const TasksContext = createContext({} as InitialContext);
@@ -24,6 +24,7 @@ const TasksProvider: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ ch
 
   const value = {
     tasks,
+    setTasks,
   };
 
   return (
