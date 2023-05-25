@@ -1,14 +1,15 @@
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, Typography } from '@mui/material';
-import { TaskObject } from '../lib/interfaces';
 
 import ExpandIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
+
+import { TaskObject } from '../../lib/interfaces';
+import { deleteTask } from '../../lib/utils';
+import { TasksContext } from '../../lib/context';
 import TaskInput from './TaskInput';
-import { deleteTask } from '../lib/utils';
-import { TasksContext } from '../lib/context';
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from '../ConfirmModal';
 
 type TaskFieldProps = {
   category: string;

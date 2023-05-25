@@ -3,8 +3,8 @@ import { Box, CircularProgress, Fab, Grow, Paper, TextField, Typography } from '
 import CreateIcon from '@mui/icons-material/AddTask';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { TasksContext } from '../lib/context';
-import { createTask, updateTask } from '../lib/utils';
+import { TasksContext } from '../../lib/context';
+import { createTask, updateTask } from '../../lib/utils';
 
 type TaskInputProps = {
   expand: boolean;

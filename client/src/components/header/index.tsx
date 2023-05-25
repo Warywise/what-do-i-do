@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderImg from '../assets/whatdoheader.png';
+import HeaderImg from '../../assets/whatdoheader.png';
 
 const Header: React.FC = () => {
 

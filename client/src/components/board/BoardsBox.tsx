@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { TasksContext } from '../lib/context';
 import { Box } from '@mui/material';
+
+import { TasksContext } from '../../lib/context';
 import TasksBoard from './TasksBoard';
 
 const BoardsBox: React.FC = () => {

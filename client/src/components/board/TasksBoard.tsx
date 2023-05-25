@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Collapse, Fab, Paper } from '@mui/material';
-import { TaskObject } from '../lib/interfaces';
-import TaskField from './TaskField';
-import TasksBoardActions from './TasksBoardActions';
 import CreateIcon from '@mui/icons-material/AddTask';
-import TaskInput from './TaskInput';
+
+import { TaskObject } from '../../lib/interfaces';
+import TaskField from '../task/TaskField';
+import TasksBoardActions from './TasksBoardActions';
+import TaskInput from '../task/TaskInput';
 
 const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
