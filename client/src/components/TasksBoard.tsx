@@ -4,11 +4,13 @@ import { TaskObject } from '../lib/interfaces';
 import TaskField from './TaskField';
 import TasksBoardActions from './TasksBoardActions';
 import CreateIcon from '@mui/icons-material/AddTask';
+import TaskInput from './TaskInput';
 
 const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
   const [expanded, setExpanded] = useState('');
   const [collapseIn, setCollapseIn] = useState(false);
+  const [showTaskInput, setShowTaskInput] = useState(false);
 
   const handleExpand = (taskId: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? taskId : '');
@@ -46,10 +48,22 @@ const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks
             />
           );
         })}
-        <Fab variant="extended" color='success' className='new-task'>
-          <CreateIcon sx={{ m: 1 }} />
-          New task
-        </Fab>
+        {showTaskInput
+          ? <TaskInput
+            expand={showTaskInput}
+            setExpand={setShowTaskInput}
+            category={category}
+          />
+        : <Fab
+            title="New task"
+            variant="extended"
+            color='success'
+            className='new-task'
+            onClick={() => setShowTaskInput(true)}
+          >
+            <CreateIcon sx={{ m: 1 }} />
+            New task
+          </Fab>}
       </Paper>
     </Collapse>
   );

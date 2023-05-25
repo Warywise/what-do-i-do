@@ -21,16 +21,18 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
         <Fab
           color="success"
           variant="extended"
-          size='medium'
+          size="small"
           sx={{ boxShadow: 'none' }}
+          title="Edit task"
         >
           <EditIcon />
         </Fab>
         <Fab
           color="warning"
           variant="extended"
-          size='medium'
+          size="small"
           sx={{ boxShadow: 'none' }}
+          title="Delete task"
         >
           <DeleteIcon />
         </Fab>
