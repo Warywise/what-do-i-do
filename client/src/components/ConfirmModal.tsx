@@ -53,9 +53,11 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ open, setOpen, actionCallba
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button startIcon onClick={handleClose}>Disagree</Button>
-          <Button startIcon onClick={() => setConfirm(true)} autoFocus>
-            Agree
+          <Button variant="outlined" color="warning" onClick={handleClose}>
+            Oops! I will do it.
+          </Button>
+          <Button variant="contained" color="success" onClick={() => setConfirm(true)} autoFocus>
+            Yeah! I'm sure.
           </Button>
         </DialogActions>
       </Dialog>

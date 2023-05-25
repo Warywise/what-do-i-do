@@ -1,10 +1,14 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, Typography } from '@mui/material';
 import { TaskObject } from '../lib/interfaces';
 
 import ExpandIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
+import TaskInput from './TaskInput';
+import { deleteTask } from '../lib/utils';
+import { TasksContext } from '../lib/context';
+import ConfirmModal from './ConfirmModal';
 
 type TaskFieldProps = {
   category: string;
@@ -13,7 +17,24 @@ type TaskFieldProps = {
 } & TaskObject;
 
 const TaskField: React.FC<TaskFieldProps> = (props) => {
+  const { setTasks } = useContext(TasksContext);
   const { category, id, title, description, createdAt, concludedAt, expanded, onChange } = props;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handleDeleteTask = async () => {
+    const responseData = await deleteTask({ id, category });
+    setTasks(responseData);
+  }
+
+  const confirmDeleteTask = async () => {
+    if (concludedAt) {
+      await handleDeleteTask();
+    } else {
+      setShowConfirmModal(true);
+    }
+  };
 
   const TaskActions = () => {
     return (
@@ -24,6 +45,7 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
           size="small"
           sx={{ boxShadow: 'none' }}
           title="Edit task"
+          onClick={() => setIsEditing(true)}
         >
           <EditIcon />
         </Fab>
@@ -33,6 +55,7 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
           size="small"
           sx={{ boxShadow: 'none' }}
           title="Delete task"
+          onClick={confirmDeleteTask}
         >
           <DeleteIcon />
         </Fab>
@@ -42,7 +65,7 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
 
   return (
     <Accordion
-      expanded={expanded}
+      expanded={expanded || isEditing}
       onChange={onChange(id)}
       className="task-field"
     >
@@ -56,7 +79,15 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
             : 'No description'}
         </Typography>
       </AccordionSummary>
-        <TaskActions />
+      <TaskInput
+        category={category}
+        previousTitle={title}
+        previousDescription={description as string}
+        expand={isEditing}
+        setExpand={setIsEditing}
+        taskId={id}
+      />
+      <TaskActions />
       <AccordionDetails className="task-expand-details" sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography textAlign="start" sx={{ color: 'text.secondary' }}>
           {description || 'No description'}
@@ -72,6 +103,13 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
           </Typography>
         </Box>
       </AccordionDetails>
+      {showConfirmModal && <ConfirmModal
+        open={showConfirmModal}
+        setOpen={setShowConfirmModal}
+        actionCallback={handleDeleteTask}
+        sectionTitle={title}
+        section='task'
+      />}
     </Accordion >
   );
 };

@@ -4,7 +4,7 @@ import CreateIcon from '@mui/icons-material/AddTask';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import { TasksContext } from '../lib/context';
-import { createTask } from '../lib/utils';
+import { createTask, updateTask } from '../lib/utils';
 
 type TaskInputProps = {
   expand: boolean;
@@ -12,10 +12,16 @@ type TaskInputProps = {
   category: string;
   previousTitle?: string;
   previousDescription?: string;
+  taskId?: string,
 };
 
 const TaskInput: React.FC<TaskInputProps> = ({
-  expand, setExpand, category, previousTitle = '', previousDescription = ''
+  expand,
+  setExpand,
+  category,
+  previousTitle = '',
+  previousDescription = '',
+  taskId,
 }) => {
   const { setTasks } = useContext(TasksContext);
 
@@ -41,7 +47,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
     console.log(title, description);
 
     if (titleIsValid()) {
-      const responseData = await createTask({ title, description, category });
+      const responseData = taskId
+        ? await updateTask({ id: taskId, title, description, category })
+        : await createTask({ title, description, category });
+
       setTasks(responseData);
       setExpand(false);
     }
@@ -50,8 +59,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
 
   return (
     <Grow in={expand} mountOnEnter unmountOnExit>
-      <Paper elevation={3} sx={{ borderRadius: 4, mt: 1 }}>
-        <Typography color="green" display="inline" textAlign="center" variant="overline">New Task:</Typography>
+      <Paper elevation={3} sx={{ borderRadius: 4, mt: 1, mb: taskId && 1 }}>
+        <Typography color="green" display="inline" textAlign="center" variant="overline">
+          {taskId ? 'Upadte Task:' : 'New Task:'}
+        </Typography>
         <Box display="inline-flex" justifyContent="center" gap="1em" margin="1em">
           <TextField
             label="Title"
@@ -61,11 +72,13 @@ const TaskInput: React.FC<TaskInputProps> = ({
             onError={() => titleRef.current.focus()}
             onChange={handleChange(setTitle)}
             helperText={!titleIsValid() && wasFocused() ? 'Title is required' : ''}
+            value={title}
             required
           />
           <TextField
             label="Description"
             onChange={handleChange(setDescription)}
+            value={description}
           />
         </Box>
         <Box
