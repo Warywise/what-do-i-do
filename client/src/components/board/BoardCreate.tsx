@@ -8,7 +8,7 @@ import { createBoard, getRandomColor, setBoardsColor } from '../../lib/utils';
 import { TasksContext } from '../../lib/context';
 
 const BoardCreate: React.FC = () => {
-  const { setTasks } = useContext(TasksContext);
+  const { setTasks, setError } = useContext(TasksContext);
   const [creatingBoard, setCreatingBoard] = useState(false);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
@@ -23,8 +23,12 @@ const BoardCreate: React.FC = () => {
       setLoading(true);
 
       const responseData = await createBoard(category.toLowerCase());
-      setTasks(responseData);
-      saveBoardColor();
+      if (responseData.error) {
+        setError(responseData.error as string);
+      } else {
+        setTasks(responseData);
+        saveBoardColor();
+      }
 
       setLoading(false);
     }

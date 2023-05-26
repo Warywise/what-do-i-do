@@ -9,7 +9,7 @@ export class TaskVerifier implements Middleware {
   public use(req: Request, res: Response, next: NextFunction) {
     const error = this.verifyFields(req);
 
-    if (error) return res.status(HTTP_CODES.BAD_REQUEST).json({ error });
+    if (error) return res.status(HTTP_CODES.BAD_REQUEST).json({ error: error.message });
 
     next();
   }

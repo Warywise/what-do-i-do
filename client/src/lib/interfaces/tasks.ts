@@ -28,5 +28,5 @@ export interface TaskObject extends TaskBase {
 }
 
 export type TasksData = {
-  [key: string]: Array<TaskObject>;
+  [key: string]: Array<TaskObject> | string;
 };

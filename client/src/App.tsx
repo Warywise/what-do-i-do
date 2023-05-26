@@ -1,6 +1,7 @@
 import './App.scss';
 import Header from './components/header';
 import BoardsBox from './components/board/BoardsBox';
+import InfoBar from './components/InfoBar';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <div>
         <BoardsBox />
       </div>
+      <InfoBar />
     </>
   )
 }

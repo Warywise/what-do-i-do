@@ -9,6 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { TasksContext } from '../../lib/context';
 import { deleteBoard, getBoardsColor, setBoardsColor as storeBoardColor } from '../../lib/utils';
 import ConfirmModal from '../ConfirmModal';
+import { TaskObject } from '../../lib/interfaces';
 
 type BoardActionsProps = {
   boardColor: string;
@@ -17,18 +18,22 @@ type BoardActionsProps = {
 };
 
 const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardColor, category }) => {
-  const { tasks, setTasks } = useContext(TasksContext);
+  const { tasks, setTasks, setError } = useContext(TasksContext);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [editingBoard, setEditingBoard] = useState(false);
   const colorRef = useRef<HTMLInputElement>(null);
   const currBoardColor = getBoardsColor(category) as string;
 
-  const isBoardConcluded = () => tasks[category].every((task) => task.concludedAt);
+  const isBoardConcluded = () => (tasks[category] as TaskObject[]).every((task) => task.concludedAt);
 
   const handleDelete = async () => {
     const responseData = await deleteBoard(category);
-    setTasks(responseData);
+    if (responseData.error) {
+      setError(responseData.error as string);
+    } else {
+      setTasks(responseData);
+    }
   };
 
   const confirmDelete = () => {

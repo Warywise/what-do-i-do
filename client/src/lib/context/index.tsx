@@ -7,12 +7,15 @@ import { TASKS_URL } from '../utils';
 type InitialContext = {
   tasks: TasksData,
   setTasks: Dispatch<SetStateAction<TasksData>>,
+  error: string | null,
+  setError: Dispatch<SetStateAction<string | null>>,
 };
 
 export const TasksContext = createContext({} as InitialContext);
 
 const TasksProvider: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ children }) => {
   const [tasks, setTasks] = useState<TasksData>({});
+  const [error, setError] = useState<string | null>(null);
 
   const fetchTasks = async () => {
     const tasksData = await fetch(TASKS_URL)
@@ -25,6 +28,8 @@ const TasksProvider: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ ch
   const value = {
     tasks,
     setTasks,
+    error,
+    setError,
   };
 
   return (

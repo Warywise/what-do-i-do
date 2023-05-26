@@ -23,7 +23,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
   previousDescription = '',
   taskId,
 }) => {
-  const { setTasks } = useContext(TasksContext);
+  const { setTasks, setError } = useContext(TasksContext);
 
   const [title, setTitle] = useState(previousTitle);
   const [description, setDescription] = useState(previousDescription);
@@ -50,8 +50,12 @@ const TaskInput: React.FC<TaskInputProps> = ({
         ? await updateTask({ id: taskId, title, description, category })
         : await createTask({ title, description, category });
 
-      setTasks(responseData);
-      setExpand(false);
+      if (responseData.error) {
+        setError(responseData.error as string);
+      } else {
+        setTasks(responseData);
+        setExpand(false);
+      }
     }
     setLoading(false);
   };

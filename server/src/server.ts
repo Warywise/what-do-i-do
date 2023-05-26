@@ -23,7 +23,7 @@ server.get("/", (req: Request, res: Response) => {
 const serverErrorMiddleware = (
   error: Error, _req: Request, res: Response, _next: NextFunction
 ) => {
-  process.env.NODE_ENV !== 'production' && console.log('\n⛔ Error: ', error, '\n');
+  console.log('\n⛔ Error: ', error, '\n');
   return res.status(res.statusCode || HTTP_CODES.INTERNAL_SERVER_ERROR).json({ error: error?.message ?? error });
 };
 

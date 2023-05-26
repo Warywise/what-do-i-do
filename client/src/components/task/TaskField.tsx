@@ -19,7 +19,7 @@ type TaskFieldProps = {
 } & TaskObject;
 
 const TaskField: React.FC<TaskFieldProps> = (props) => {
-  const { setTasks } = useContext(TasksContext);
+  const { setTasks, setError } = useContext(TasksContext);
   const { category, id, title, description, createdAt, concludedAt, expanded, onChange } = props;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +27,11 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
 
   const handleDeleteTask = async () => {
     const responseData = await deleteTask({ id, category });
-    setTasks(responseData);
+    if (responseData.error) {
+      setError(responseData.error as string);
+    } else {
+      setTasks(responseData);
+    }
   }
 
   const confirmDeleteTask = async () => {
@@ -41,7 +45,11 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
   const handleConcludeTask = async (ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     ev.stopPropagation();
     const responseData = await updateTask({ id, category, concluded: !concludedAt });
-    setTasks(responseData);
+    if (responseData.error) {
+      setError(responseData.error as string);
+    } else {
+      setTasks(responseData);
+    }
   };
 
   const TaskActions = () => {
