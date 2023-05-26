@@ -6,12 +6,14 @@ import { TaskObject } from '../../lib/interfaces';
 import TaskField from '../task/TaskField';
 import TasksBoardActions from './TasksBoardActions';
 import TaskInput from '../task/TaskInput';
+import { getBoardsColor } from '../../lib/utils';
 
 const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
   const [expanded, setExpanded] = useState('');
   const [collapseIn, setCollapseIn] = useState(false);
   const [showTaskInput, setShowTaskInput] = useState(false);
+  const [boardColor, setBoardColor] = useState(getBoardsColor(category) as string);
 
   const handleExpand = (taskId: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? taskId : '');
@@ -27,17 +29,17 @@ const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks
       <Paper
         className="tasks-board"
         elevation={2}
-        sx={{ backgroundColor: category === 'general' ? '#efe5e5' : '#aef5f5' }}
+        sx={{ backgroundColor: boardColor }}
       >
         <Paper
           className="tasks-board-header"
           elevation={0}
-          sx={{ backgroundColor: category === 'general' ? '#efe5e5' : '#aef5f5' }}
+          sx={{ backgroundColor: boardColor }}
           onClick={() => setCollapseIn(!collapseIn)}
         >
           <h2>{category}</h2>
         </Paper>
-        <TasksBoardActions category={category} />
+        <TasksBoardActions {...{ boardColor, setBoardColor, category }} />
         {!!tasks.length && tasks.map((task) => {
           return (
             <TaskField

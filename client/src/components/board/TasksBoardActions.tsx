@@ -1,16 +1,27 @@
-import React, { useContext, useState } from 'react';
-import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
+import React, { Dispatch, SetStateAction, useContext, useRef, useState } from 'react';
+import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction, TextField, Fab, Slide } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Dehaze';
 import ColorIcon from '@mui/icons-material/PaletteTwoTone';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
+import ConfirmIcon from '@mui/icons-material/Check';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import { TasksContext } from '../../lib/context';
-import { deleteBoard } from '../../lib/utils';
+import { deleteBoard, setBoardsColor as storeBoardColor } from '../../lib/utils';
 import ConfirmModal from '../ConfirmModal';
 
-const TasksBoardActions: React.FC<{ category: string }> = ({ category }) => {
+type BoardActionsProps = {
+  boardColor: string;
+  setBoardColor: Dispatch<SetStateAction<string>>;
+  category: string;
+};
+
+const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardColor, category }) => {
   const { tasks, setTasks } = useContext(TasksContext);
+
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [editingBoard, setEditingBoard] = useState(false);
+  const colorRef = useRef<HTMLInputElement>(null);
 
   const isBoardConcluded = () => tasks[category].every((task) => task.concludedAt);
 
@@ -27,10 +38,52 @@ const TasksBoardActions: React.FC<{ category: string }> = ({ category }) => {
     }
   };
 
+  const handleEdit = ({ target }: any) => {
+    target.blur();
+    setEditingBoard(true);
+  };
+
+  const saveBoardColor = () => {
+    const color = colorRef.current?.value || boardColor;
+    storeBoardColor(category, color);
+    setBoardColor(color);
+    setEditingBoard(false)
+  }
+
   const actions = [
-    { icon: <ColorIcon />, name: 'Color', onClick: () => console.log('Edit Board') },
+    { icon: <ColorIcon />, name: 'Color', onClick: handleEdit },
     { icon: <DeleteIcon />, name: 'Delete', onClick: confirmDelete },
   ];
+
+  const BoardEditor = () => {
+    return (
+      <Slide direction="left" in={editingBoard} mountOnEnter unmountOnExit>
+        <Box display="inline-flex" gap="1em" m="1em">
+          <TextField
+            type="color"
+            label="Color"
+            InputLabelProps={{ shrink: true }}
+            sx={{ width: '4em', zIndex: 8 }}
+            size="small"
+            variant="filled"
+            inputRef={colorRef}
+            autoFocus
+          />
+          <Fab color="success" onClick={saveBoardColor} size="small">
+            <ConfirmIcon titleAccess="New Board" />
+          </Fab>
+          <Fab
+            color="error"
+            onClick={() => setEditingBoard(false)}
+            size="small"
+            title="Cancel"
+          >
+            <CancelIcon />
+          </Fab>
+        </Box>
+      </Slide>
+    )
+  };
 
   return (
     <Box sx={{
@@ -41,7 +94,7 @@ const TasksBoardActions: React.FC<{ category: string }> = ({ category }) => {
       right: 16,
       zIndex: 8,
     }}>
-      <SpeedDial
+      {!editingBoard && <SpeedDial
         ariaLabel="tasks-board-actions"
         title='Board Options'
         icon={
@@ -59,7 +112,8 @@ const TasksBoardActions: React.FC<{ category: string }> = ({ category }) => {
             onClick={onClick}
           />
         ))}
-      </SpeedDial>
+      </SpeedDial>}
+      <BoardEditor />
       <ConfirmModal
         open={showConfirmModal}
         setOpen={setShowConfirmModal}

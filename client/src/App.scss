@@ -142,40 +142,6 @@
     .new-board {
       animation: blub 8s ease-in infinite;
     }
-    .board-create-header {
-    }
-  }
-}
-
-.board-create {
-  border-radius: 0 4px 4px 4px;
-  padding: 2em;
-  padding-top: 6.5em;
-  position: relative;
-  margin-block: 1.75em;
-
-  .board-create-header {
-    box-shadow: 1px -5px 3px -5px rgba(0, 0, 0, 0.25), -5px -5px 3px -5px rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px 4px 0 0;
-    padding: 0.5em;
-    position: absolute;
-    width: 25%;
-    height: 3em;
-    top: -1.5em;
-    left: 0;
-    z-index: 7;
-    cursor: pointer;
-
-    ::selection {
-      background-color: transparent;
-    }
-
-    &>* {
-      margin-block: 0.15em;
-    }
   }
 }
 

@@ -44,7 +44,6 @@ const TaskInput: React.FC<TaskInputProps> = ({
 
   const handleCreateTask = async () => {
     setLoading(true);
-    console.log(title, description);
 
     if (titleIsValid()) {
       const responseData = taskId

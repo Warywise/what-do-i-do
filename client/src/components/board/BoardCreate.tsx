@@ -44,11 +44,7 @@ const BoardCreate: React.FC = () => {
       elevation={2}
       sx={{ backgroundColor: color }}
     >
-      <Paper
-        className="tasks-board-header"
-        elevation={0}
-        sx={{ backgroundColor: color }}
-      >
+      <Paper className="tasks-board-header" elevation={0} sx={{ backgroundColor: color }}>
         <h2>{category}</h2>
       </Paper>
       <Grow in={creatingBoard} mountOnEnter unmountOnExit>
