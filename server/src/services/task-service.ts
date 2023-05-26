@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 
 import * as Storage from '../lib/handleFile';
 import HTTP_CODES from '../lib/httpCodes';
+import { isBooleanObject } from 'util/types';
 
 class TaskService {
   private readonly Storage;
@@ -59,8 +60,8 @@ class TaskService {
 
     const task = tasks[category][taskIndex];
 
-    if (concluded) {
-      task.concludedAt = `${new Date()}`;
+    if (typeof concluded === 'boolean') {
+      task.concludedAt = concluded ? `${new Date()}` : null;
     } else {
       task.title = title;
       task.description = description || null;
