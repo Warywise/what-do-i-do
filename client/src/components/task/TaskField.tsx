@@ -1,10 +1,9 @@
 import React, { MouseEvent, SyntheticEvent, useContext, useState } from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, Typography, Divider } from '@mui/material';
 
 import ExpandIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
-import WarningIcon from '@mui/icons-material/ErrorOutlineRounded';
 import ConcludedIcon from '@mui/icons-material/TaskAltRounded';
 
 import { TaskObject } from '../../lib/interfaces';
@@ -91,11 +90,11 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
         <Typography className="task-field-title" minWidth="40%" textAlign="start" variant="button" color="success">
           {concludedAt ? <s>{title}</s> : title}
         </Typography>
-        <Typography color="GrayText" className="task-field-description">
+        {!expanded && <Typography color="GrayText" className="task-field-description">
           {description
             ? (description.length > 60 ? `${description.slice(0, 60)}...` : description)
             : 'No description'}
-        </Typography>
+        </Typography>}
         <TaskActions />
       </AccordionSummary>
       <TaskInput
@@ -106,18 +105,24 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
         setExpand={setIsEditing}
         taskId={id}
       />
-      <AccordionDetails className="task-expand-details" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography textAlign="start" sx={{ color: 'text.secondary' }}>
+      <AccordionDetails className="task-expand-details" sx={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Typography textAlign="start" color="InfoText" maxWidth="75%">
           {description || 'No description'}
         </Typography>
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          sx={{ ml: 1, mr: 1.5 }}
+          flexItem
+        />
         <Box>
-          <Typography textAlign="center" sx={{ color: 'text.secondary' }}>
-            Criada em: {new Date(createdAt).toLocaleDateString()}
+          <Typography textAlign="center" color="InfoText" mb="1em">
+            Created at: {new Date(createdAt).toLocaleDateString()}
           </Typography>
-          <Typography textAlign="start" sx={{ color: 'text.secondary' }}>
+          <Typography textAlign="start" color="InfoText">
             {concludedAt
-              ? `Concluída em: ${new Date(concludedAt).toLocaleDateString()}`
-              : 'Não concluída'}
+              ? `Concluded at: ${new Date(concludedAt).toLocaleDateString()}`
+              : 'Not cloncluded'}
           </Typography>
         </Box>
       </AccordionDetails>

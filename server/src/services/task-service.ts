@@ -3,7 +3,6 @@ import { v4 } from 'uuid';
 
 import * as Storage from '../lib/handleFile';
 import HTTP_CODES from '../lib/httpCodes';
-import { isBooleanObject } from 'util/types';
 
 class TaskService {
   private readonly Storage;
@@ -24,7 +23,7 @@ class TaskService {
 
     if (!tasks[category]) {
       res.status(HTTP_CODES.BAD_REQUEST);
-      throw new Error('Categoria inválida!');
+      throw new Error('Invalid board name!');
     }
 
     const newTask = {
@@ -48,14 +47,14 @@ class TaskService {
 
     if (!tasks[category]) {
       res.status(HTTP_CODES.BAD_REQUEST);
-      throw new Error('Categoria inválida!');
+      throw new Error('Invalid board name!');
     }
 
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
     if (taskIndex < 0) {
       res.status(HTTP_CODES.NOT_FOUND);
-      throw new Error('Tarefa não encontrada!');
+      throw new Error('Task not found!');
     }
 
     const task = tasks[category][taskIndex];
@@ -78,14 +77,14 @@ class TaskService {
 
     if (!tasks[category]) {
       res.status(HTTP_CODES.BAD_REQUEST);
-      throw new Error('Categoria inválida!');
+      throw new Error('Invalid board name!');
     }
 
     const taskIndex = tasks[category].findIndex((task) => task.id === id);
 
     if (taskIndex < 0) {
       res.status(HTTP_CODES.NOT_FOUND);
-      throw new Error('Tarefa não encontrada!');
+      throw new Error('Task not found!');
     }
 
     tasks[category].splice(taskIndex, 1);

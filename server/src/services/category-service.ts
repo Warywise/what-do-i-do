@@ -16,7 +16,7 @@ class CategoryService {
 
     if (tasksFile[name]) {
       res.status(HTTP_CODES.BAD_REQUEST);
-      throw new Error('Categoria já existente!');
+      throw new Error('Board name already exists!');
     }
 
     tasksFile[name] = [];
@@ -32,7 +32,7 @@ class CategoryService {
 
     if (!tasksFile[name]) {
       res.status(HTTP_CODES.NOT_FOUND);
-      throw new Error('Categoria não encontrada!');
+      throw new Error('Board name not found!');
     }
 
     delete tasksFile[name];

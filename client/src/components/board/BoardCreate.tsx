@@ -22,7 +22,7 @@ const BoardCreate: React.FC = () => {
     if (creatingBoard) {
       setLoading(true);
 
-      const responseData = await createBoard(category);
+      const responseData = await createBoard(category.toLowerCase());
       setTasks(responseData);
       saveBoardColor();
 

@@ -10,13 +10,13 @@ export const serverTests = describe('Test the essential server features.', () =>
     const response = await request(server).get('/');
 
     expect(response.statusCode).toEqual(HTTP_CODES.OK);
-    expect(response.text).toEqual('Veja o ReadMe para rotas disponíveis');
+    expect(response.text).toEqual('See the ReadMe for available routes');
   });
 
   test('It should throw an Error', async () => {
     const response = await request(server).get('/').send({ error: true });
 
-    expect(response.body).toEqual({ error: 'Erro de teste' });
+    expect(response.body).toEqual({ error: 'Test Error!' });
   });
 
   test('It should handle the file correctly', () => {

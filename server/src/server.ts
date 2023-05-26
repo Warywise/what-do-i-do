@@ -15,9 +15,9 @@ server.use(Routers);
 console.log('~> Routers registered!');
 
 server.get("/", (req: Request, res: Response) => {
-  if (req.body.error) throw new Error("Erro de teste");
+  if (req.body.error) throw new Error("Test Error!");
 
-  res.status(HTTP_CODES.OK).send("Veja o ReadMe para rotas disponíveis");
+  res.status(HTTP_CODES.OK).send("See the ReadMe for available routes");
 });
 
 const serverErrorMiddleware = (
