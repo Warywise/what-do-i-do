@@ -34,8 +34,8 @@ export const createBoard = async (name: string): Promise<TasksData> => {
   return await fetcher(CATEGORY_URL, 'POST', { name });
 }
 
-export const deleteBoard = async (category: string): Promise<TasksData> => {
-  return await fetcher(CATEGORY_URL, 'DELETE', { category });
+export const deleteBoard = async (name: string): Promise<TasksData> => {
+  return await fetcher(CATEGORY_URL, 'DELETE', { name });
 }
 
 const colors = [

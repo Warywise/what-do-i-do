@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Dehaze';
 import ColorIcon from '@mui/icons-material/PaletteTwoTone';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 
-const TasksBoardActions: React.FC = () => {
+import { TasksContext } from '../../lib/context';
+import { deleteBoard } from '../../lib/utils';
+import ConfirmModal from '../ConfirmModal';
+
+const TasksBoardActions: React.FC<{ category: string }> = ({ category }) => {
+  const { tasks, setTasks } = useContext(TasksContext);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const isBoardConcluded = () => tasks[category].every((task) => task.concludedAt);
+
+  const handleDelete = async () => {
+    const responseData = await deleteBoard(category);
+    setTasks(responseData);
+  };
+
+  const confirmDelete = () => {
+    if (isBoardConcluded()) {
+      handleDelete();
+    } else {
+      setShowConfirmModal(true);
+    }
+  };
 
   const actions = [
     { icon: <ColorIcon />, name: 'Color', onClick: () => console.log('Edit Board') },
-    { icon: <DeleteIcon />, name: 'Delete', onClick: () => console.log('Delete Board') },
+    { icon: <DeleteIcon />, name: 'Delete', onClick: confirmDelete },
   ];
 
   return (
@@ -39,6 +60,13 @@ const TasksBoardActions: React.FC = () => {
           />
         ))}
       </SpeedDial>
+      <ConfirmModal
+        open={showConfirmModal}
+        setOpen={setShowConfirmModal}
+        actionCallback={handleDelete}
+        section="board"
+        sectionTitle={category}
+      />
     </Box>
   );
 }

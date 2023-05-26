@@ -37,7 +37,7 @@ const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks
         >
           <h2>{category}</h2>
         </Paper>
-        <TasksBoardActions />
+        <TasksBoardActions category={category} />
         {!!tasks.length && tasks.map((task) => {
           return (
             <TaskField
