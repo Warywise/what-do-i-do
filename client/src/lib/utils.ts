@@ -56,7 +56,7 @@ export const getRandomColor = (): string => {
 }
 
 export const getBoardsColor = (category?: string) => {
-  const boardsColor = JSON.parse(localStorage.getItem('boardsColor') || '{}') as { [k:string]: string };
+  const boardsColor = JSON.parse(localStorage.getItem('boardsColor') || '{}') as { [k: string]: string };
   if (category) {
     const color = boardsColor[category];
     return color ?? getRandomColor();
@@ -66,7 +66,20 @@ export const getBoardsColor = (category?: string) => {
 }
 
 export const setBoardsColor = (category: string, color: string): void => {
-  const boardsColor = getBoardsColor() as { [k:string]: string };
+  const boardsColor = getBoardsColor() as { [k: string]: string };
   boardsColor[category] = color;
   localStorage.setItem('boardsColor', JSON.stringify(boardsColor));
+}
+
+// https://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+export const isBoardDark = (boardColor: string): boolean => {
+  const hex = boardColor.replace('#', '');
+  const rgb = parseInt(hex, 16);  // convert rrggbb to decimal
+  const r = (rgb >> 16) & 0xff;
+  const g = (rgb >> 8) & 0xff;
+  const b = (rgb >> 0) & 0xff;
+
+  const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+  return brightness < 85;
 }

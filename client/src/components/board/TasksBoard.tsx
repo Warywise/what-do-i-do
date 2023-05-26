@@ -6,7 +6,7 @@ import { TaskObject } from '../../lib/interfaces';
 import TaskField from '../task/TaskField';
 import TasksBoardActions from './TasksBoardActions';
 import TaskInput from '../task/TaskInput';
-import { getBoardsColor } from '../../lib/utils';
+import { getBoardsColor, isBoardDark } from '../../lib/utils';
 
 const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks, category }) => {
 
@@ -14,6 +14,8 @@ const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks
   const [collapseIn, setCollapseIn] = useState(false);
   const [showTaskInput, setShowTaskInput] = useState(false);
   const [boardColor, setBoardColor] = useState(getBoardsColor(category) as string);
+
+  const darkBoardColor = isBoardDark(boardColor) ? '#f9f9f9' : '';
 
   const handleExpand = (taskId: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? taskId : '');
@@ -34,7 +36,7 @@ const TasksBoard: React.FC<{ tasks: TaskObject[], category: string }> = ({ tasks
         <Paper
           className="tasks-board-header"
           elevation={0}
-          sx={{ backgroundColor: boardColor }}
+          sx={{ backgroundColor: boardColor, color: darkBoardColor }}
           onClick={() => setCollapseIn(!collapseIn)}
         >
           <h2>{category}</h2>
