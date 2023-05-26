@@ -150,6 +150,18 @@
   padding: 0.25em;
   position: relative;
 
+  &>:first-child {
+    padding-left: 3em;
+  }
+
+  .task-field-status {
+    align-self: center;
+    left: 0;
+    position: absolute;
+    visibility: visible;
+    z-index: 9;
+  }
+
   .task-field-description {
     overflow: hidden;
     text-align: left;
@@ -159,12 +171,13 @@
   }
 
   .task-field-actions {
+    align-self: center;
     display: flex;
-    gap: 24px;
+    gap: 1em;
     max-width: 33%;
     position: absolute;
     right: 8%;
-    top: 0.5em;
+    // top: 0.5em;
     visibility: visible;
     z-index: 9;
   }
@@ -195,6 +208,13 @@
       .expand-icon {
         display: none;
         visibility: hidden;
+      }
+    }
+
+    .task-field {
+      .task-field-actions {
+        gap: 0.5em;
+        right: 5%;
       }
     }
   }

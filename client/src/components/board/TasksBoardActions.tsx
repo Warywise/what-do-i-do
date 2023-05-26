@@ -7,7 +7,7 @@ import ConfirmIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import { TasksContext } from '../../lib/context';
-import { deleteBoard, setBoardsColor as storeBoardColor } from '../../lib/utils';
+import { deleteBoard, getBoardsColor, setBoardsColor as storeBoardColor } from '../../lib/utils';
 import ConfirmModal from '../ConfirmModal';
 
 type BoardActionsProps = {
@@ -22,6 +22,7 @@ const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardCo
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [editingBoard, setEditingBoard] = useState(false);
   const colorRef = useRef<HTMLInputElement>(null);
+  const currBoardColor = getBoardsColor(category) as string;
 
   const isBoardConcluded = () => tasks[category].every((task) => task.concludedAt);
 
@@ -55,13 +56,14 @@ const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardCo
     { icon: <DeleteIcon />, name: 'Delete', onClick: confirmDelete },
   ];
 
-  const BoardEditor = () => {
+  const BoardColorEditor = () => {
     return (
       <Slide direction="left" in={editingBoard} mountOnEnter unmountOnExit>
         <Box display="inline-flex" gap="1em" m="1em">
           <TextField
             type="color"
             label="Color"
+            defaultValue={currBoardColor}
             InputLabelProps={{ shrink: true }}
             sx={{ width: '4em', zIndex: 8 }}
             size="small"
@@ -107,13 +109,14 @@ const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardCo
         {actions.map(({ name, icon, onClick }) => (
           <SpeedDialAction
             key={name}
+            title={name}
             icon={<>{icon}{name}</>}
             FabProps={{ variant: 'extended' }}
             onClick={onClick}
           />
         ))}
       </SpeedDial>}
-      <BoardEditor />
+      <BoardColorEditor />
       <ConfirmModal
         open={showConfirmModal}
         setOpen={setShowConfirmModal}

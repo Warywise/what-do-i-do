@@ -11,7 +11,8 @@ export interface CreateTaskPayload extends TaskInfos {
   category: string;
 }
 
-export interface UpdateTaskPayload extends TaskBase {
+export interface UpdateTaskPayload extends Omit<TaskBase, 'title'> {
+  title?: string;
   concluded?: boolean;
   category: string;
 }

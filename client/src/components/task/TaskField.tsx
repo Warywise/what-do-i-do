@@ -1,12 +1,14 @@
-import React, { SyntheticEvent, useContext, useState } from 'react';
+import React, { MouseEvent, SyntheticEvent, useContext, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, Typography } from '@mui/material';
 
 import ExpandIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/DeleteForever';
+import WarningIcon from '@mui/icons-material/ErrorOutlineRounded';
+import ConcludedIcon from '@mui/icons-material/TaskAltRounded';
 
 import { TaskObject } from '../../lib/interfaces';
-import { deleteTask } from '../../lib/utils';
+import { deleteTask, updateTask } from '../../lib/utils';
 import { TasksContext } from '../../lib/context';
 import TaskInput from './TaskInput';
 import ConfirmModal from '../ConfirmModal';
@@ -37,6 +39,12 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
     }
   };
 
+  const handleConcludeTask = async (ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    ev.stopPropagation();
+    const responseData = await updateTask({ id, category, concluded: !concludedAt });
+    setTasks(responseData);
+  };
+
   const TaskActions = () => {
     return (
       <Typography className="task-field-actions">
@@ -51,7 +59,7 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
           <EditIcon />
         </Fab>
         <Fab
-          color="warning"
+          color="error"
           variant="extended"
           size="small"
           sx={{ boxShadow: 'none' }}
@@ -71,14 +79,24 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
       className="task-field"
     >
       <AccordionSummary expandIcon={<ExpandIcon className="expand-icon" />}>
-        <Typography className="task-field-title" minWidth="40%" textAlign="start" variant="button">
-          {title}
+        <Fab
+          className="task-field-status"
+          size="small"
+          color={concludedAt ? 'success' : 'default'}
+          onClick={handleConcludeTask}
+          title={concludedAt ? 'Task concluded' : 'Conclude task'}
+        >
+          <ConcludedIcon className="concluded-icon" />
+        </Fab>
+        <Typography className="task-field-title" minWidth="40%" textAlign="start" variant="button" color="success">
+          {concludedAt ? <s>{title}</s> : title}
         </Typography>
         <Typography color="GrayText" className="task-field-description">
           {description
             ? (description.length > 60 ? `${description.slice(0, 60)}...` : description)
             : 'No description'}
         </Typography>
+        <TaskActions />
       </AccordionSummary>
       <TaskInput
         category={category}
@@ -88,7 +106,6 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
         setExpand={setIsEditing}
         taskId={id}
       />
-      <TaskActions />
       <AccordionDetails className="task-expand-details" sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography textAlign="start" sx={{ color: 'text.secondary' }}>
           {description || 'No description'}
