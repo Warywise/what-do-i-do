@@ -67,7 +67,13 @@ export const getBoardsColor = (category?: string) => {
 
 export const setBoardsColor = (category: string, color: string): void => {
   const boardsColor = getBoardsColor() as { [k: string]: string };
-  boardsColor[category] = color;
+  boardsColor[category.toLocaleLowerCase()] = color;
+  localStorage.setItem('boardsColor', JSON.stringify(boardsColor));
+}
+
+export const deleteBoardsColor = (category: string): void => {
+  const boardsColor = getBoardsColor() as { [k: string]: string };
+  delete boardsColor[category.toLocaleLowerCase()];
   localStorage.setItem('boardsColor', JSON.stringify(boardsColor));
 }
 
