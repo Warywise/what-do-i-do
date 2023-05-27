@@ -1,0 +1,21 @@
+{
+  "name": "what-do-i-do",
+  "version": "1.0.0",
+  "description": "Uma lista de tarefas simples utilizando Node, React e Typescript.",
+  "main": "./",
+  "scripts": {
+    "dev-install": "npx concurrently \"cd server/ && npm install --silent\" \"cd client/ && npm install --silent\"",
+    "dev": "npx concurrently \"cd server/ && npm run dev\" \"cd client/ && npm run dev\"",
+    "server-test": "cd server/ && npm run test && cd .."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Warywise/what-do-i-do.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Warywise/what-do-i-do/issues"
+  },
+  "homepage": "https://github.com/Warywise/what-do-i-do#readme"
+}
