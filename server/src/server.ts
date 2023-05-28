@@ -5,6 +5,7 @@ import { ERROR_MIDDLEWARE } from '@decorators/express';
 
 import Routers from './routers';
 import HTTP_CODES from './lib/httpCodes';
+import ensureFileStorage from './lib/ensureFileStorage';
 
 const server = express();
 console.log('~> Express initialized!');
@@ -13,6 +14,7 @@ server.use(express.json());
 console.log('~> Configs OK.');
 server.use(Routers);
 console.log('~> Routers registered!');
+ensureFileStorage();
 
 server.get("/", (req: Request, res: Response) => {
   if (req.body.error) throw new Error("Test Error!");

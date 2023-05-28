@@ -16,6 +16,7 @@ const BoardCreate: React.FC = () => {
 
   const saveBoardColor = () => {
     setBoardsColor(category, color);
+    setColor(getRandomColor());
   }
 
   const handleCreateBoard = async () => {

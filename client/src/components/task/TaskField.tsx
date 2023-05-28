@@ -130,7 +130,7 @@ const TaskField: React.FC<TaskFieldProps> = (props) => {
           <Typography textAlign="start" color="InfoText">
             {concludedAt
               ? `Concluded at: ${new Date(concludedAt).toLocaleDateString()}`
-              : 'Not cloncluded'}
+              : 'Not concluded'}
           </Typography>
         </Box>
       </AccordionDetails>

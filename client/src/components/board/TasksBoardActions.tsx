@@ -7,7 +7,7 @@ import ConfirmIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import { TasksContext } from '../../lib/context';
-import { deleteBoard, getBoardsColor, setBoardsColor as storeBoardColor } from '../../lib/utils';
+import { deleteBoard, deleteBoardsColor, getBoardsColor, setBoardsColor as storeBoardColor } from '../../lib/utils';
 import ConfirmModal from '../ConfirmModal';
 import { TaskObject } from '../../lib/interfaces';
 
@@ -32,6 +32,7 @@ const TasksBoardActions: React.FC<BoardActionsProps> = ({ boardColor, setBoardCo
     if (responseData.error) {
       setError(responseData.error as string);
     } else {
+      deleteBoardsColor(category);
       setTasks(responseData);
     }
   };
